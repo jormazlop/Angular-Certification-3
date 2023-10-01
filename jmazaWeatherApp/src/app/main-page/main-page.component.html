@@ -1,6 +1,13 @@
 <div class="container-fluid">
 
-  <app-zipcode-entry> </app-zipcode-entry>
-  <app-current-conditions></app-current-conditions>
+  <app-zipcode-entry />
+
+  <ng-container *ngIf="$errorMsg | async as errorMsg">
+    <div class="alert alert-danger" role="alert">
+      {{ errorMsg }}
+    </div>
+  </ng-container>
+
+  <app-current-conditions />
 
 </div>

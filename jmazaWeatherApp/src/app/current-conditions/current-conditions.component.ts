@@ -1,8 +1,9 @@
-import { ChangeDetectionStrategy, Component, Signal } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, Signal } from '@angular/core';
 import { WeatherService } from "../services/weather.service";
 import { LocationService } from "../services/location.service";
 import { Router } from "@angular/router";
 import { ConditionsAndZip } from '../conditions-and-zip.type';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-current-conditions',
@@ -10,9 +11,22 @@ import { ConditionsAndZip } from '../conditions-and-zip.type';
   styleUrls: ['./current-conditions.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class CurrentConditionsComponent {
+export class CurrentConditionsComponent implements OnDestroy {
 
-  constructor(protected weatherService: WeatherService, private locationService: LocationService, private router: Router) {}
+  locationSubscription: Subscription = new Subscription();
+  selectedLocation;
+
+  constructor(
+    protected weatherService: WeatherService,
+    private locationService: LocationService,
+    private router: Router
+  ) {
+    this.locationSubscription = locationService.getLocations().subscribe((locations: string[]) => {
+      if(!locations.includes(this.selectedLocation?.zip)) {
+        this.selectedLocation = null;
+      }
+    });
+  }
 
   protected currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.getCurrentConditions();
 
@@ -23,5 +37,9 @@ export class CurrentConditionsComponent {
   removeLocation(zipcode : string) {
     this.locationService.removeLocation(zipcode);
     this.weatherService.removeCurrentConditions(zipcode);
+  }
+
+  ngOnDestroy(): void {
+    this.locationSubscription.unsubscribe();
   }
 }
