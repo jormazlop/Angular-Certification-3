@@ -11,4 +11,4 @@ const appRoutes: Routes = [
     loadChildren: () => import('./forecasts-list/forecasts-list.module').then(m => m.ForecastsListModule)
   },
 ];
-export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes, {bindToComponentInputs: true});
+export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes, { bindToComponentInputs: true });

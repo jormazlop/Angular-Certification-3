@@ -3,7 +3,9 @@ import { BehaviorSubject, Observable } from 'rxjs';
 
 export const LOCATIONS : string = "locations";
 
-@Injectable()
+@Injectable(
+  { providedIn: 'root' }
+)
 export class LocationService {
 
   locations : string[] = [];

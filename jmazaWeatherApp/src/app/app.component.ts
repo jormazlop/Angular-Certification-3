@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
-import { LOCATIONS, LocationService } from './location.service';
-import { WeatherService } from './weather.service';
+import { LOCATIONS, LocationService } from './services/location.service';
+import { WeatherService } from './services/weather.service';
 
 @Component({
   selector: 'app-root',
