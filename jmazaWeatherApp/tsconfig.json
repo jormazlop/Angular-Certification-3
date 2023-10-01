@@ -5,6 +5,7 @@
     "baseUrl": "src",
     "sourceMap": true,
     "declaration": false,
+    "module": "ES2022",
     "moduleResolution": "node",
     "experimentalDecorators": true,
     "target": "ES2022",
@@ -12,9 +13,15 @@
       "node_modules/@types"
     ],
     "lib": [
-      "es2016",
+      "ES2022",
       "dom"
     ],
     "useDefineForClassFields": false
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": true,
+    "strictInputAccessModifiers": true,
+    "strictTemplates": true
   }
 }

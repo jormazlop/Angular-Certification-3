@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import {SwPush, SwUpdate} from '@angular/service-worker';
-import {interval} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
+import { LOCATIONS, LocationService } from './location.service';
+import { WeatherService } from './weather.service';
 
 @Component({
   selector: 'app-root',
@@ -10,7 +9,16 @@ import {HttpClient} from '@angular/common/http';
 })
 export class AppComponent {
 
-    constructor() {
+    constructor(private locationService : LocationService, private weatherService: WeatherService) {
 
+      let locString = localStorage.getItem(LOCATIONS);
+
+      const locations = locString ? JSON.parse(locString).filter(loc => loc): [];
+
+      locations.forEach(loc => {
+        const zipcode = loc;
+        this.locationService.addLocation(zipcode);
+        this.weatherService.addCurrentConditions(zipcode);
+      });
     }
 }

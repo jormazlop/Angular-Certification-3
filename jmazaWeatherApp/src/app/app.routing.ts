@@ -1,14 +1,14 @@
 import { ModuleWithProviders }  from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
-import {ForecastsListComponent} from "./forecasts-list/forecasts-list.component";
 import {MainPageComponent} from "./main-page/main-page.component";
 
 const appRoutes: Routes = [
   {
     path: '', component: MainPageComponent
   },
-  {
-    path: 'forecast/:zipcode', component: ForecastsListComponent
-  }
+  { 
+    path: 'forecast/:zipcode',
+    loadChildren: () => import('./forecasts-list/forecasts-list.module').then(m => m.ForecastsListModule)
+  },
 ];
-export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes, {});
+export const routing: ModuleWithProviders<any> = RouterModule.forRoot(appRoutes, {bindToComponentInputs: true});
