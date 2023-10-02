@@ -3,3 +3,17 @@
   flex-direction: column;
   gap: 50px;
 }
+
+.alert-danger {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+
+.alert-danger span:hover {
+  cursor: pointer;
+}
+
+.alert-danger p {
+  margin: 0;
+}

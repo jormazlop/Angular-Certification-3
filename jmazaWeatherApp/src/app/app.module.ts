@@ -12,13 +12,15 @@ import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { WeatherHttpInterceptor } from './services/weather-http-interceptor.services';
+import { SelectedConditionComponent } from './current-conditions/selected-condition/selected-condition.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ZipcodeEntryComponent,
     CurrentConditionsComponent,
-    MainPageComponent
+    MainPageComponent,
+    SelectedConditionComponent
   ],
   imports: [
     BrowserModule,

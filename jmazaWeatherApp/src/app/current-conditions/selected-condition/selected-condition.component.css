@@ -1,0 +1,7 @@
+.condition-container {
+   align-items: center;
+   border: 1px solid grey;
+   display: flex;
+   justify-content: space-between;
+   padding: 25px 50px;
+}

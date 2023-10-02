@@ -14,4 +14,8 @@ export class MainPageComponent {
   constructor(protected searchErrorService: SearchErrorService) {
     this.$errorMsg = this.searchErrorService.getErrorMsg();
   }
+
+  onClickCloseMessage(): void {
+    this.searchErrorService.setErrorMsg('');
+  }
 }

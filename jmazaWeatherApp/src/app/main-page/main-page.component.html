@@ -4,7 +4,8 @@
 
   <ng-container *ngIf="$errorMsg | async as errorMsg">
     <div class="alert alert-danger" role="alert">
-      {{ errorMsg }}
+      <p>{{ errorMsg }}</p>
+      <span class="close" (click)="onClickCloseMessage()">&times;</span>
     </div>
   </ng-container>
 

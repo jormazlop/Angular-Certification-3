@@ -8,5 +8,28 @@
 
 .tabs {
   display: flex;
+  gap: 5px;
   flex-wrap: wrap;
+}
+
+.tablinks {
+  background-color: #617AA0;
+  border: 1px solid grey;
+  color: #FFF;
+  display: flex;
+  font-weight: 500;
+  gap: 10px;
+  padding: 5px 10px;
+}
+
+.tablinks p {
+  margin: 0;
+}
+
+.tablinks p:hover {
+  cursor: pointer;
+}
+
+.tablinks span:hover {
+  cursor: pointer;
 }

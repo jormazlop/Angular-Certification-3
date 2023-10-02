@@ -1,4 +1,4 @@
-import { Component, OnDestroy } from '@angular/core';
+import { Component, HostListener, OnDestroy } from '@angular/core';
 import { LocationService } from "../services/location.service";
 import { WeatherService } from 'app/services/weather.service';
 import { Subscription } from 'rxjs';
@@ -13,6 +13,7 @@ export class ZipcodeEntryComponent implements OnDestroy {
 
   locationSubscription: Subscription = new Subscription();
   locations: string[] = [];
+  zipcode: string = '';
 
   constructor(
     private locationService: LocationService,
@@ -24,12 +25,19 @@ export class ZipcodeEntryComponent implements OnDestroy {
     });
   }
 
-  addLocation(zipcode : string): void {
+  @HostListener('document:keyup', ['$event'])
+  onEsc(event: KeyboardEvent) {
+    if(event.key === 'Enter') {
+      this.addLocation();
+    }
+  }
+
+  addLocation(): void {
 
     // We check that there are no duplicate codes in the list of results
-    if(!this.locations.includes(zipcode)) {
-      this.locationService.addLocation(zipcode);
-      this.weatherService.addCurrentConditions(zipcode);
+    if(!this.locations.includes(this.zipcode)) {
+      this.locationService.addLocation(this.zipcode);
+      this.weatherService.addCurrentConditions(this.zipcode);
     } else {
       this.searchErrorService.setErrorMsg('The zip code is already in the list of results!');
     }
