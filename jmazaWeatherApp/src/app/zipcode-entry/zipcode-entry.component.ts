@@ -46,6 +46,8 @@ export class ZipcodeEntryComponent implements OnDestroy {
   removeAllLocation(): void {
     this.locationService.removeAll();
     this.weatherService.removeAllConditions();
+    this.searchErrorService.setErrorMsg('');
+    this.zipcode = '';
   }
 
   ngOnDestroy(): void {

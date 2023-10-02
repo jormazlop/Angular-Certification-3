@@ -19,10 +19,26 @@ export class WeatherHttpInterceptor implements HttpInterceptor {
       const cachedResponse: HttpResponse<any> | HttpErrorResponse | null = this.cacheService.get(url);
 
       // Return cached response
-      if (cachedResponse) {
-        return cachedResponse['error']? throwError(() => cachedResponse): of(new HttpResponse(cachedResponse));
-      }
+      if(cachedResponse) {
 
+        // The cached response is an error
+        if (cachedResponse['error']) {
+
+          if(cachedResponse.status === 400) {
+            this.searchErrorService.setErrorMsg('Incorrect Search!');
+          }
+
+          if(cachedResponse.status === 404) {
+            this.searchErrorService.setErrorMsg('Zip Code not found!');
+          }
+
+          const zipcode = req.url.match('zip=' + "(.*)" + ',us')[1].trim();
+          this.locationService.removeLocation(zipcode);
+          return throwError(() => cachedResponse);
+        }
+
+        return of(new HttpResponse(cachedResponse));
+      }
 
       return next.handle(req)
       .pipe(
@@ -30,27 +46,30 @@ export class WeatherHttpInterceptor implements HttpInterceptor {
           if (event instanceof HttpResponse && event.status === 200) {
             this.cacheService.put(url, event);
             this.searchErrorService.setErrorMsg('');
-            console.log(event);
           }
           return event;
         }),
         catchError((error: HttpErrorResponse) => {
 
-          this.cacheService.putError(url, error);
+          this.cacheService.put(url, error);
+
+          if(error.status === 400) {
+            this.searchErrorService.setErrorMsg('Incorrect Search!');
+          } 
 
           if(error.status === 404) {
-            // If the zipcode does not exist, we delete it from the localstorage to prevent it
-            // from trying to search for it in each connection, since it does not show the
-            // corresponding tab, we cannot delete it from the application
-            const zipcode = req.url.match('zip=' + "(.*)" + ',us')[1].trim();
-            
-            if (zipcode) {
-              this.locationService.removeLocation(zipcode);
-            }
-
             this.searchErrorService.setErrorMsg('Zip Code not found!');
+          } 
 
-          }        
+          // If the zipcode is not correct or does not exist, we delete it from the localstorage 
+          // to prevent it from trying to search for it in each connection, since it does not show the
+          // corresponding tab, we cannot delete it from the application
+          const zipcode = req.url.match('zip=' + "(.*)" + ',us')[1].trim();
+            
+          if (zipcode) {
+            this.locationService.removeLocation(zipcode);
+          }
+                
            return throwError(() => new Error(error.message));
         })
       );
