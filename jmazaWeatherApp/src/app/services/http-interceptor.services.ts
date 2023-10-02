@@ -70,7 +70,7 @@ export class WeatherHttpInterceptor implements HttpInterceptor {
             this.locationService.removeLocation(zipcode);
           }
                 
-           return throwError(() => new Error(error.message));
+          return throwError(() => new Error(error.message));
         })
       );
     }

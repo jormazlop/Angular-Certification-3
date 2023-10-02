@@ -1,6 +1,6 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { WeatherService } from '../services/weather.service';
-import { Forecast } from './forecast.type';
+import { Forecast } from '../types/forecast.type';
 
 @Component({
   selector: 'app-forecasts-list',

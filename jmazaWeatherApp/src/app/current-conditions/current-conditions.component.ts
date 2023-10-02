@@ -2,7 +2,7 @@ import { ChangeDetectionStrategy, Component, OnDestroy, Signal } from '@angular/
 import { WeatherService } from "../services/weather.service";
 import { LocationService } from "../services/location.service";
 import { Router } from "@angular/router";
-import { ConditionsAndZip } from '../conditions-and-zip.type';
+import { ConditionsAndZip } from '../types/conditions-and-zip.type';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -30,11 +30,11 @@ export class CurrentConditionsComponent implements OnDestroy {
 
   protected currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.getCurrentConditions();
 
-  showForecast(zipcode : string){
+  showForecast(zipcode : string): void {
     this.router.navigate(['/forecast', zipcode])
   }
 
-  removeLocation(zipcode : string) {
+  removeLocation(zipcode : string): void {
     this.locationService.removeLocation(zipcode);
     this.weatherService.removeCurrentConditions(zipcode);
   }

@@ -1,10 +1,10 @@
-import {Injectable, Signal, signal} from '@angular/core';
-import {Observable} from 'rxjs';
+import { Injectable, Signal, signal } from '@angular/core';
+import { Observable } from 'rxjs';
 
-import {HttpClient} from '@angular/common/http';
-import {CurrentConditions} from '../current-conditions/current-conditions.type';
-import {ConditionsAndZip} from '../conditions-and-zip.type';
-import {Forecast} from '../forecasts-list/forecast.type';
+import { HttpClient } from '@angular/common/http';
+import { CurrentConditions } from '../types/current-conditions.type';
+import { ConditionsAndZip } from '../types/conditions-and-zip.type';
+import { Forecast } from '../types/forecast.type';
 
 @Injectable(
   { providedIn: 'root' }
@@ -24,7 +24,7 @@ export class WeatherService {
              .subscribe(data => this.currentConditions.mutate(conditions => conditions.push({zip: zipcode, data})));
   }
 
-  removeCurrentConditions(zipcode: string) {
+  removeCurrentConditions(zipcode: string): void {
     this.currentConditions.mutate(conditions => {
       for (let i in conditions) {
         if (conditions[i].zip == zipcode)

@@ -34,12 +34,12 @@ export class ZipcodeEntryComponent implements OnDestroy {
 
   addLocation(): void {
 
-    // We check that there are no duplicate codes in the list of results
+    // We check that there are no duplicate zipcodes in the list of results
     if(!this.locations.includes(this.zipcode)) {
       this.locationService.addLocation(this.zipcode);
       this.weatherService.addCurrentConditions(this.zipcode);
     } else {
-      this.searchErrorService.setErrorMsg('The zip code is already in the list of results!');
+      this.searchErrorService.setErrorMsg('The zipcode is already in the list of results!');
     }
   }
 

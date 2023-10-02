@@ -6,12 +6,12 @@ import { AppComponent } from './app.component';
 import { ZipcodeEntryComponent } from './zipcode-entry/zipcode-entry.component';
 import { CurrentConditionsComponent } from './current-conditions/current-conditions.component';
 import { MainPageComponent } from './main-page/main-page.component';
-import {RouterModule} from "@angular/router";
-import {routing} from "./app.routing";
-import {HTTP_INTERCEPTORS, HttpClientModule} from "@angular/common/http";
+import { RouterModule } from "@angular/router";
+import { routing } from "./app.routing";
+import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
-import { WeatherHttpInterceptor } from './services/weather-http-interceptor.services';
+import { WeatherHttpInterceptor } from './services/http-interceptor.services';
 import { SelectedConditionComponent } from './current-conditions/selected-condition/selected-condition.component';
 
 @NgModule({
