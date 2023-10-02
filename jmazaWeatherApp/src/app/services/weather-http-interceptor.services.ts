@@ -1,26 +1,43 @@
 import { Injectable } from '@angular/core';
 import { HttpInterceptor, HttpHandler, HttpRequest, HttpEvent, HttpErrorResponse, HttpResponse }
   from '@angular/common/http';
-import { Observable, catchError, map, throwError } from 'rxjs';
+import { Observable, catchError, map, of, throwError } from 'rxjs';
 import { LocationService } from './location.service';
 import { SearchErrorService } from './search-error.service';
+import { HttpCacheService } from './http-cache.service';
 
 @Injectable()
 export class WeatherHttpInterceptor implements HttpInterceptor {
 
-    constructor(private locationService: LocationService, private searchErrorService: SearchErrorService) {}
+    constructor(private locationService: LocationService, private searchErrorService: SearchErrorService, private cacheService: HttpCacheService) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
+
+      let url = req.url;
+
+      // Attempt to retrieve a cached response
+      const cachedResponse: HttpResponse<any> | HttpErrorResponse | null = this.cacheService.get(url);
+
+      // Return cached response
+      if (cachedResponse) {
+        return cachedResponse['error']? throwError(() => cachedResponse): of(new HttpResponse(cachedResponse));
+      }
+
 
       return next.handle(req)
       .pipe(
         map((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse && event.status === 200) {
+            this.cacheService.put(url, event);
             this.searchErrorService.setErrorMsg('');
+            console.log(event);
           }
           return event;
         }),
         catchError((error: HttpErrorResponse) => {
+
+          this.cacheService.putError(url, error);
+
           if(error.status === 404) {
             // If the zipcode does not exist, we delete it from the localstorage to prevent it
             // from trying to search for it in each connection, since it does not show the
