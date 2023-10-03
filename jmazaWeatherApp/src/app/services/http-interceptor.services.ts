@@ -9,7 +9,11 @@ import { HttpCacheService } from './http-cache.service';
 @Injectable()
 export class WeatherHttpInterceptor implements HttpInterceptor {
 
-    constructor(private locationService: LocationService, private searchErrorService: SearchErrorService, private cacheService: HttpCacheService) {}
+    constructor(
+      private locationService: LocationService,
+      private searchErrorService: SearchErrorService,
+      private cacheService: HttpCacheService
+    ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
 

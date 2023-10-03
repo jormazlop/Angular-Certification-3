@@ -17,3 +17,31 @@
 .alert-danger p {
   margin: 0;
 }
+
+.cache-info {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.cache-info p {
+  margin: 0;
+}
+
+.cache-input {
+  display: flex;
+  gap: 15px;
+}
+
+.cache-input input {
+  width: 80px;
+}
+
+.cache-buttons {
+  display: flex;
+  gap: 20px;
+}
+
+.cache-button {
+  width: 200px;
+}

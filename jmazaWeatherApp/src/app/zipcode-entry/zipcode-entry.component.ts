@@ -25,13 +25,7 @@ export class ZipcodeEntryComponent implements OnDestroy {
     });
   }
 
-  @HostListener('document:keyup', ['$event'])
-  onEsc(event: KeyboardEvent) {
-    if(event.key === 'Enter') {
-      this.addLocation();
-    }
-  }
-
+  @HostListener('document:keydown.enter', ['$event'])
   addLocation(): void {
 
     // We check that there are no duplicate zipcodes in the list of results

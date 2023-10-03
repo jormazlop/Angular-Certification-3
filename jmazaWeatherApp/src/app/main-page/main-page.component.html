@@ -1,5 +1,23 @@
 <div class="container-fluid">
 
+  <div class="cache-info" *ngIf="$refreshCache  | async as cache">
+    <p>Last time cache was refreshed: {{ cache.lastTime | date: 'long' }}</p>
+    <div class="cache-input">
+      <p>Cache refresh every : </p>
+      <input type="number" #cacheInput [value]="cache.cacheDuration / 1000">
+      <p>seconds</p>
+    </div>
+    <div class="cache-buttons">
+      <button class="btn btn-primary cache-button" (click)="onClickUpdateCacheDuration(cacheInput.value)">
+        Update Cache Duration
+      </button>
+      <button class="btn btn-primary cache-button" (click)="onClickClearCache()">
+        Clear Cache
+      </button>
+    </div>
+
+  </div>
+
   <app-zipcode-entry />
 
   <ng-container *ngIf="$errorMsg | async as errorMsg">
