@@ -1,5 +1,5 @@
 <div class="tabs">
-  <ng-container *ngFor="let location of currentConditionsByZip()">
+  <ng-container *ngFor="let location of currentConditionsByZip(); trackBy: trackLocation">
     <div class="tablinks"
             (click)="selectedLocation = location">
             <p> {{ location.data.name }} ({{location.zip}}) </p>

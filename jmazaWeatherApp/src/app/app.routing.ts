@@ -4,7 +4,7 @@ import { MainPageComponent } from "./main-page/main-page.component";
 
 const appRoutes: Routes = [
   {
-    path: '', component: MainPageComponent
+    path: '', component: MainPageComponent, title: 'Weathers'
   },
   { 
     path: 'forecast/:zipcode',
