@@ -42,7 +42,6 @@ export class HttpCacheService {
     get(url: string): HttpResponse<any> | HttpErrorResponse | null {
         const response = this.cachedRequest.filter((req: CachedResponse) => req.url === url)
                                            .map((req: CachedResponse) => req.response)[0];
-
         return response;
     }
 

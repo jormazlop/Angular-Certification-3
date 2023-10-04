@@ -16,7 +16,6 @@ export class WeatherHttpInterceptor implements HttpInterceptor {
     ) {}
 
     intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-
       let url = req.url;
 
       // Attempt to retrieve a cached response
