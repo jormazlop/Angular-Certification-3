@@ -33,3 +33,10 @@
 .tablinks span:hover {
   cursor: pointer;
 }
+
+.current-conditions {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+  padding: 25px 50px;
+}

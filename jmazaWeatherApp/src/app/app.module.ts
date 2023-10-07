@@ -12,15 +12,13 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from "@angular/common/http";
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { WeatherHttpInterceptor } from './services/http-interceptor.services';
-import { SelectedConditionComponent } from './current-conditions/selected-condition/selected-condition.component';
-
+import { TabComponent } from './shared/tab/tab.component';
 @NgModule({
   declarations: [
     AppComponent,
     ZipcodeEntryComponent,
     CurrentConditionsComponent,
     MainPageComponent,
-    SelectedConditionComponent
   ],
   imports: [
     BrowserModule,
@@ -28,6 +26,7 @@ import { SelectedConditionComponent } from './current-conditions/selected-condit
     HttpClientModule,
     RouterModule,
     routing,
+    TabComponent,
     ServiceWorkerModule.register('/ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [

@@ -16,6 +16,13 @@ export class CurrentConditionsComponent implements OnDestroy {
   locationSubscription: Subscription = new Subscription();
   selectedLocation;
 
+  conditionsTabStyle = {
+    'align-items': 'center',
+    'display': 'flex',
+    'justify-content': 'space-between',
+    'padding': '25px 50px'
+  };
+
   constructor(
     protected weatherService: WeatherService,
     private locationService: LocationService,

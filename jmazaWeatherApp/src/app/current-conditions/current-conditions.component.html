@@ -9,7 +9,7 @@
 </div>
 
 <ng-container *ngIf="selectedLocation">
-  <app-selected-condition>
+  <app-tab [cssClass]="conditionsTabStyle">
     <div>
       <h4>Current conditions: {{selectedLocation.data.weather[0].main}}</h4>
       <h4>Temperatures today:</h4>
@@ -26,7 +26,7 @@
       <span class="close" (click)="removeLocation(selectedLocation.zip)">&times;</span>
       <img [src]="weatherService.getWeatherIcon(selectedLocation.data.weather[0].id)">
     </div>
-  </app-selected-condition>
+  </app-tab>
 </ng-container>
 
 
