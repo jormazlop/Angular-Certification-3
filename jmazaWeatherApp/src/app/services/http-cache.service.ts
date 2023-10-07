@@ -23,7 +23,7 @@ export class HttpCacheService {
     cachedRequest: CachedResponse[] = [];
 
     // Cache refresh time is initialized to 2 hours
-    refreshCache: CacheRefresh = { cacheDuration: 72000, lastTime: Date.now() }
+    refreshCache: CacheRefresh = { cacheDuration: 72000000, lastTime: Date.now() }
     $refreshCache = new BehaviorSubject(this.refreshCache);
     timerCache: Subscription;
 
