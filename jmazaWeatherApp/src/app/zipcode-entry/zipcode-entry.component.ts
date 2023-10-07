@@ -27,25 +27,24 @@ export class ZipcodeEntryComponent implements OnDestroy {
 
   @HostListener('document:keydown.enter', ['$event'])
   addLocation(): void {
-
     // We check that there are no duplicate zipcodes in the list of results
     if(!this.locations.includes(this.zipcode)) {
       this.locationService.addLocation(this.zipcode);
       this.weatherService.addCurrentConditions(this.zipcode);
     } else {
-      this.searchErrorService.setErrorMsg('The zipcode is already in the list of results!');
+      this.searchErrorService.setErrorMsg(SearchErrorService.ZIP_ALREADY_PRESENT_ERROR);
     }
-  }
+  };
 
   removeAllLocation(): void {
     this.locationService.removeAll();
     this.weatherService.removeAllConditions();
-    this.searchErrorService.setErrorMsg('');
+    this.searchErrorService.setErrorMsg(SearchErrorService.NO_ERROR);
     this.zipcode = '';
-  }
+  };
 
   ngOnDestroy(): void {
     this.locationSubscription.unsubscribe();
-  }
+  };
 
 }

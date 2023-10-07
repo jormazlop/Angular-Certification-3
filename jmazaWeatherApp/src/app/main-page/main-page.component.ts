@@ -22,7 +22,7 @@ export class MainPageComponent {
   }
 
   onClickCloseMessage(): void {
-    this.searchErrorService.setErrorMsg('');
+    this.searchErrorService.setErrorMsg(SearchErrorService.NO_ERROR);
   }
 
   onClickUpdateCacheDuration(cacheDuration: string): void {
@@ -30,15 +30,15 @@ export class MainPageComponent {
     const duration = Number(cacheDuration);
 
     if(duration < 1) {
-      this.searchErrorService.setErrorMsg('The minimum refresh time is 1 second!');
+      this.searchErrorService.setErrorMsg(SearchErrorService.REFRESH_ERROR);
     } else {
-      this.searchErrorService.setErrorMsg('');
+      this.searchErrorService.setErrorMsg(SearchErrorService.NO_ERROR);
       this.cacheService.setRefreshCache(duration);
     }
   }
 
   onClickClearCache(): void {
-    this.searchErrorService.setErrorMsg('');
+    this.searchErrorService.setErrorMsg(SearchErrorService.NO_ERROR);
     this.cacheService.clearCache();
   }
 }

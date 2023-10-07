@@ -28,11 +28,11 @@ export class WeatherHttpInterceptor implements HttpInterceptor {
         if (cachedResponse['error']) {
 
           if(cachedResponse.status === 400) {
-            this.searchErrorService.setErrorMsg('Incorrect Search!');
+            this.searchErrorService.setErrorMsg(SearchErrorService.SEARCH_ERROR);
           }
 
           if(cachedResponse.status === 404) {
-            this.searchErrorService.setErrorMsg('Zip Code not found!');
+            this.searchErrorService.setErrorMsg(SearchErrorService.ZIP_SEARCH_ERROR);
           }
 
           const zipcode = req.url.match('zip=' + "(.*)" + ',us')[1].trim();
@@ -48,7 +48,7 @@ export class WeatherHttpInterceptor implements HttpInterceptor {
         map((event: HttpEvent<any>) => {
           if (event instanceof HttpResponse && event.status === 200) {
             this.cacheService.put(url, event);
-            this.searchErrorService.setErrorMsg('');
+            this.searchErrorService.setErrorMsg(SearchErrorService.NO_ERROR);
           }
           return event;
         }),
@@ -57,11 +57,11 @@ export class WeatherHttpInterceptor implements HttpInterceptor {
           this.cacheService.put(url, error);
 
           if(error.status === 400) {
-            this.searchErrorService.setErrorMsg('Incorrect Search!');
+            this.searchErrorService.setErrorMsg(SearchErrorService.SEARCH_ERROR);
           } 
 
           if(error.status === 404) {
-            this.searchErrorService.setErrorMsg('Zip Code not found!');
+            this.searchErrorService.setErrorMsg(SearchErrorService.ZIP_SEARCH_ERROR);
           } 
 
           // If the zipcode is not correct or does not exist, we delete it from the localstorage 

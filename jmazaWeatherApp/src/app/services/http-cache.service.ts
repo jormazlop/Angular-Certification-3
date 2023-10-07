@@ -22,7 +22,7 @@ export class HttpCacheService {
 
     cachedRequest: CachedResponse[] = [];
 
-    // Cache refresh time is initialized to 2 hours.
+    // Cache refresh time is initialized to 2 hours
     refreshCache: CacheRefresh = { cacheDuration: 72000, lastTime: Date.now() }
     $refreshCache = new BehaviorSubject(this.refreshCache);
     timerCache: Subscription;
@@ -31,7 +31,7 @@ export class HttpCacheService {
         let requestsString = localStorage.getItem(CACHED_REQUESTS);
         this.cachedRequest = requestsString ? JSON.parse(requestsString): [];
 
-        this.initcacheRefresh();
+        this.initCacheRefresh();
 
         this.timerCache = timer(this.timeUntilNextRefresh()).subscribe(() => {  
             this.clearCache();
@@ -43,13 +43,13 @@ export class HttpCacheService {
         const response = this.cachedRequest.filter((req: CachedResponse) => req.url === url)
                                            .map((req: CachedResponse) => req.response)[0];
         return response;
-    }
+    };
 
     // We save the url and the response in the storage
     put(url: string, response: HttpResponse<any> | HttpErrorResponse): void {
         this.cachedRequest.push({url, response});
         localStorage.setItem(CACHED_REQUESTS, JSON.stringify(this.cachedRequest));
-    }
+    };
 
     // We update the refresh time of the cache
     setRefreshCache(refreshCache: number): void {
@@ -64,11 +64,11 @@ export class HttpCacheService {
         this.timerCache = timer(this.timeUntilNextRefresh()).subscribe(() => {
             this.clearCache();
         });
-    }
+    };
 
     getRefreshCache(): Observable<CacheRefresh> {
         return this.$refreshCache.asObservable();
-    }
+    };
 
     clearCache(): void {
         this.refreshCache.lastTime = Date.now();
@@ -82,9 +82,9 @@ export class HttpCacheService {
         this.timerCache = timer(this.timeUntilNextRefresh()).subscribe(() => {
             this.clearCache();
         });
-    }
+    };
 
-    private initcacheRefresh(): void {
+    private initCacheRefresh(): void {
 
         let refreshCache = localStorage.getItem(REFRESH_CACHE);
 
@@ -94,11 +94,14 @@ export class HttpCacheService {
             this.refreshCache = JSON.parse(refreshCache);
             this.$refreshCache.next(this.refreshCache);
         }
-    }
+    };
 
+    // If the difference between the current time and the last time the cache was refreshed
+    // is greater than the cache lifetime, it is automatically refreshed (in 0 seconds),
+    // otherwise we make a timer with the remaining cache lifetime
     private timeUntilNextRefresh(): number {
         return Date.now() - this.refreshCache.lastTime >= this.refreshCache.cacheDuration 
             ? 0
             : this.refreshCache.cacheDuration - (Date.now() - this.refreshCache.lastTime);
-    }
+    };
 }

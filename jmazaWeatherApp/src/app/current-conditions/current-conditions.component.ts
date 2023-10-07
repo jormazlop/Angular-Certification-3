@@ -21,30 +21,31 @@ export class CurrentConditionsComponent implements OnDestroy {
     private locationService: LocationService,
     private router: Router
   ) {
-    // We check if the location we have selected has been deleted
+    // We check, with each new emision of the list of locations,
+    // if the selected location has been deleted (Button X or Remove locations)
     this.locationSubscription = locationService.getLocations().subscribe((locations: string[]) => {
       if(!locations.includes(this.selectedLocation?.zip)) {
         this.selectedLocation = null;
       }
     });
-  }
+  };
 
   protected currentConditionsByZip: Signal<ConditionsAndZip[]> = this.weatherService.getCurrentConditions();
 
   protected showForecast(zipcode : string): void {
     this.router.navigate(['/forecast', zipcode])
-  }
+  };
 
   protected removeLocation(zipcode : string): void {
     this.locationService.removeLocation(zipcode);
     this.weatherService.removeCurrentConditions(zipcode);
-  }
+  };
 
-  protected trackLocation(index : number, location: ConditionsAndZip) {
+  protected trackLocation(index : number, location: ConditionsAndZip): string | undefined {
     return location ? location.zip : undefined;
-};
+  };
 
   ngOnDestroy(): void {
     this.locationSubscription.unsubscribe();
-  }
+  };
 }

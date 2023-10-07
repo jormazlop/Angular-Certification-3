@@ -1,6 +1,5 @@
 import { Injectable, Signal, signal } from '@angular/core';
 import { Observable } from 'rxjs';
-
 import { HttpClient } from '@angular/common/http';
 import { CurrentConditions } from '../types/current-conditions.type';
 import { ConditionsAndZip } from '../types/conditions-and-zip.type';

@@ -14,7 +14,7 @@ export class ForecastsListComponent implements OnInit {
 
   constructor(protected weatherService: WeatherService) {}
 
-  ngOnInit() {
+  ngOnInit(): void {
     this.weatherService.getForecast(this.zipcode).subscribe(data => this.forecast = data);
-  }
+  };
 }
